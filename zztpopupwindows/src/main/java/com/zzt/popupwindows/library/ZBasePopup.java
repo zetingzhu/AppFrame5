@@ -149,6 +149,7 @@ public abstract class ZBasePopup<T extends ZBasePopup> {
 
     private void updateDimAmount(float dimAmount) {
         View decorView = getDecorView();
+
         if (decorView != null) {
             WindowManager.LayoutParams p = (WindowManager.LayoutParams) decorView.getLayoutParams();
             p.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;

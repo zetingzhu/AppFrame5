@@ -13,6 +13,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -95,7 +97,6 @@ public class GuideCustomView extends RelativeLayout implements ViewTreeObserver.
     private int[] location;
     private boolean onClickExit;
     private OnClickCallback onclickListener;
-    private RelativeLayout guideViewLayout;
 
     public void restoreState() {
         Log.v(TAG, "restoreState");
@@ -108,10 +109,7 @@ public class GuideCustomView extends RelativeLayout implements ViewTreeObserver.
         porterDuffXfermode = null;
         bitmap = null;
         needDraw = true;
-        //        backgroundColor = Color.parseColor("#00000000");
         temp = null;
-        //        direction = null;
-
     }
 
     public int[] getLocation() {

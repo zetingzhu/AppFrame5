@@ -1,5 +1,5 @@
 
-package com.zzt.popupwindows.library;
+package com.zzt.popupwindows.guide;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,8 +10,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -19,22 +19,28 @@ import android.widget.FrameLayout;
 import androidx.annotation.IntDef;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
+import com.zzt.popupwindows.R;
+import com.zzt.popupwindows.library.ZBasePopup;
+import com.zzt.popupwindows.library.ZPopFrameLayout;
+import com.zzt.popupwindows.util.ScreenUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.Arrays;
 
 /**
  * @author: zeting
  * @date: 2021/6/21
- * PopupWindow 弹框普通布局
+ * PopupWindow 对View做蒙版指引
  */
-public class ZNormalPopup extends ZBasePopup {
-    private static final String TAG = ZNormalPopup.class.getSimpleName();
+public class ZGuidePopupV extends ZBasePopup {
+    private static final String TAG = ZGuidePopupV.class.getSimpleName();
     public static final int DIRECTION_TOP = 0;
     public static final int DIRECTION_BOTTOM = 1;
-    public static final int DIRECTION_CENTER_IN_SCREEN = 2;
 
-    @IntDef({DIRECTION_CENTER_IN_SCREEN, DIRECTION_TOP, DIRECTION_BOTTOM})
+    @IntDef({DIRECTION_TOP, DIRECTION_BOTTOM})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Direction {
     }
@@ -43,11 +49,6 @@ public class ZNormalPopup extends ZBasePopup {
     private int mEdgeProtectionLeft;
     private int mEdgeProtectionRight;
     private int mEdgeProtectionBottom;
-    private boolean mShowArrow = true;
-    private int mRadius = 0;
-    private int mBorderUsedColor = Color.TRANSPARENT;
-    private int mBorderWidth = 0;
-    private int mBgUsedColor = Color.TRANSPARENT;
     private int mOffsetX = 0;
     private int mOffsetYIfTop = 0;
     private int mOffsetYIfBottom = 0;
@@ -55,35 +56,15 @@ public class ZNormalPopup extends ZBasePopup {
     int mPreferredDirection = DIRECTION_BOTTOM;
     protected final int mInitWidth;
     protected final int mInitHeight;
-    private int mArrowWidth = NOT_SET;
-    private int mArrowHeight = NOT_SET;
     private View mContentView;
-    // 背景渐变背景
-    private GradientDrawable mBgUsedColorGradient;
 
-    public ZNormalPopup(Context context, int width, int height) {
+    public ZGuidePopupV(Context context, int width, int height) {
         super(context);
         mInitWidth = width;
         mInitHeight = height;
     }
 
-    public ZNormalPopup arrow(boolean showArrow) {
-        mShowArrow = showArrow;
-        return this;
-    }
-
-    public ZNormalPopup arrowSize(int width, int height) {
-        mArrowWidth = width;
-        mArrowHeight = height;
-        return this;
-    }
-
-    public ZNormalPopup radius(int radius) {
-        mRadius = radius;
-        return this;
-    }
-
-    public ZNormalPopup edgeProtection(int distance) {
+    public ZGuidePopupV edgeProtection(int distance) {
         mEdgeProtectionLeft = distance;
         mEdgeProtectionRight = distance;
         mEdgeProtectionTop = distance;
@@ -91,7 +72,7 @@ public class ZNormalPopup extends ZBasePopup {
         return this;
     }
 
-    public ZNormalPopup edgeProtection(int left, int top, int right, int bottom) {
+    public ZGuidePopupV edgeProtection(int left, int top, int right, int bottom) {
         mEdgeProtectionLeft = left;
         mEdgeProtectionTop = top;
         mEdgeProtectionRight = right;
@@ -99,62 +80,35 @@ public class ZNormalPopup extends ZBasePopup {
         return this;
     }
 
-    public ZNormalPopup offsetX(int offsetX) {
+    public ZGuidePopupV offsetX(int offsetX) {
         mOffsetX = offsetX;
         return this;
     }
 
-    public ZNormalPopup offsetYIfTop(int y) {
+    public ZGuidePopupV offsetYIfTop(int y) {
         mOffsetYIfTop = y;
         return this;
     }
 
-    public ZNormalPopup offsetYIfBottom(int y) {
+    public ZGuidePopupV offsetYIfBottom(int y) {
         mOffsetYIfBottom = y;
         return this;
     }
 
-    public ZNormalPopup preferredDirection(@Direction int preferredDirection) {
+    public ZGuidePopupV preferredDirection(@Direction int preferredDirection) {
         mPreferredDirection = preferredDirection;
         return this;
     }
 
-    public ZNormalPopup view(View contentView) {
+    public ZGuidePopupV view(View contentView) {
         mContentView = contentView;
         return this;
     }
 
-    public ZNormalPopup view(@LayoutRes int contentViewResId) {
+    public ZGuidePopupV view(@LayoutRes int contentViewResId) {
         return view(LayoutInflater.from(mContext).inflate(contentViewResId, null));
     }
 
-    public ZNormalPopup borderWidth(int borderWidth) {
-        mBorderWidth = borderWidth;
-        return this;
-    }
-
-    public ZNormalPopup borderColor(int borderColor) {
-        mBorderUsedColor = borderColor;
-        return this;
-    }
-
-    public int getBgColor() {
-        return mBgUsedColor;
-    }
-
-    public int getBorderColor() {
-        return mBorderUsedColor;
-    }
-
-    public ZNormalPopup bgColor(int bgColor) {
-        mBgUsedColor = bgColor;
-        return this;
-    }
-
-    public ZNormalPopup bgColorGradient(int bgColors[]) {
-        mBgUsedColorGradient = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, bgColors);
-        return this;
-    }
 
     class ShowInfo {
         private int[] anchorRootLocation = new int[2];
@@ -169,10 +123,7 @@ public class ZNormalPopup extends ZBasePopup {
         int direction = mPreferredDirection;
         int contentWidthMeasureSpec;
         int contentHeightMeasureSpec;
-        int decorationLeft = 0;
-        int decorationRight = 0;
-        int decorationTop = 0;
-        int decorationBottom = 0;
+
 
         ShowInfo(View anchor) {
             this.anchor = anchor;
@@ -189,11 +140,11 @@ public class ZNormalPopup extends ZBasePopup {
         }
 
         int windowWidth() {
-            return decorationLeft + width + decorationRight;
+            return width;
         }
 
         int windowHeight() {
-            return decorationTop + height + decorationBottom;
+            return height;
         }
 
         int getVisibleWidth() {
@@ -205,12 +156,13 @@ public class ZNormalPopup extends ZBasePopup {
         }
 
         int getWindowX() {
-            return x - anchorRootLocation[0];
+            return x - visibleWindowFrame.left;
         }
 
         int getWindowY() {
-            return y - anchorRootLocation[1];
+            return y - visibleWindowFrame.top;
         }
+
     }
 
     @Override
@@ -221,50 +173,26 @@ public class ZNormalPopup extends ZBasePopup {
         ShowInfo showInfo = new ShowInfo(anchor);
         calculateWindowSize(showInfo);
         calculateXY(showInfo);
-        adjustShowInfo(showInfo);
         decorateContentView(showInfo);
-        mWindow.setWidth(showInfo.windowWidth());
-        mWindow.setHeight(showInfo.windowHeight());
-        showAtLocation(anchor, showInfo.getWindowX(), showInfo.getWindowY());
+        mWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        mWindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+//        mWindow.setWidth(ScreenUtil.getScreenWidth(mContext));
+//        mWindow.setHeight(ScreenUtil.getScreenHeight(mContext));
+        showAtLocation(anchor, 0, 0);
     }
 
 
     private void decorateContentView(ShowInfo showInfo) {
         ContentView contentView = ContentView.wrap(mContentView, mInitWidth, mInitHeight);
-        if (mBgUsedColorGradient != null) {
-            contentView.setBackground(mBgUsedColorGradient);
-        } else {
-            contentView.setBackgroundColor(mBgUsedColor);
-        }
-        contentView.setBorderColor(mBorderUsedColor);
-        contentView.setBorderWidth(mBorderWidth);
-
-        contentView.setRadius(mRadius);
-
         Log.d(TAG, "contentView:" + contentView.getWidth() + " - " + contentView.getHeight());
 
         DecorRootView decorRootView = new DecorRootView(mContext, showInfo);
-//        decorRootView.setBackgroundColor(Color.parseColor("#111111"));
+        decorRootView.setBackgroundColor(Color.parseColor("#553700B3"));
         decorRootView.setContentView(contentView);
         mWindow.setContentView(decorRootView);
+        mWindow.setBackgroundDrawable(ContextCompat.getDrawable(mContext, R.drawable.bg_test_v1));
     }
 
-    private void adjustShowInfo(ShowInfo showInfo) {
-        if (mShowArrow && showInfo.direction != DIRECTION_CENTER_IN_SCREEN) {
-            if (mArrowWidth == NOT_SET) {
-                mArrowWidth = dp2px(mContext, 10);
-            }
-            if (mArrowHeight == NOT_SET) {
-                mArrowHeight = dp2px(mContext, 8);
-            }
-            if (showInfo.direction == DIRECTION_BOTTOM) {
-                showInfo.decorationTop = Math.max(showInfo.decorationTop, mArrowHeight);
-            } else if (showInfo.direction == DIRECTION_TOP) {
-                showInfo.decorationBottom = Math.max(showInfo.decorationBottom, mArrowHeight);
-                showInfo.y -= mArrowHeight;
-            }
-        }
-    }
 
     private void calculateXY(ShowInfo showInfo) {
         if (showInfo.anchorCenter < showInfo.visibleWindowFrame.left + showInfo.getVisibleWidth() / 2) { // anchor point on the left
@@ -274,7 +202,7 @@ public class ZNormalPopup extends ZBasePopup {
                     showInfo.visibleWindowFrame.right - mEdgeProtectionRight - showInfo.width,
                     showInfo.anchorCenter - showInfo.width / 2 + mOffsetX);
         }
-        int nextDirection = DIRECTION_CENTER_IN_SCREEN;
+        int nextDirection = DIRECTION_BOTTOM;
         if (mPreferredDirection == DIRECTION_BOTTOM) {
             nextDirection = DIRECTION_TOP;
         } else if (mPreferredDirection == DIRECTION_TOP) {
@@ -284,24 +212,10 @@ public class ZNormalPopup extends ZBasePopup {
     }
 
     private void handleDirection(ShowInfo showInfo, int currentDirection, int nextDirection) {
-        if (currentDirection == DIRECTION_CENTER_IN_SCREEN) {
-            showInfo.x = showInfo.visibleWindowFrame.left + (showInfo.getVisibleWidth() - showInfo.width) / 2;
-            showInfo.y = showInfo.visibleWindowFrame.top + (showInfo.getVisibleHeight() - showInfo.height) / 2;
-            showInfo.direction = DIRECTION_CENTER_IN_SCREEN;
-        } else if (currentDirection == DIRECTION_TOP) {
+        if (currentDirection == DIRECTION_TOP) {
             showInfo.y = showInfo.anchorLocation[1] - showInfo.height - mOffsetYIfTop;
-            if (showInfo.y < mEdgeProtectionTop + showInfo.visibleWindowFrame.top) {
-                handleDirection(showInfo, nextDirection, DIRECTION_CENTER_IN_SCREEN);
-            } else {
-                showInfo.direction = DIRECTION_TOP;
-            }
         } else if (currentDirection == DIRECTION_BOTTOM) {
             showInfo.y = showInfo.anchorLocation[1] + showInfo.anchor.getHeight() + mOffsetYIfBottom;
-            if (showInfo.y > showInfo.visibleWindowFrame.bottom - mEdgeProtectionBottom - showInfo.height) {
-                handleDirection(showInfo, nextDirection, DIRECTION_CENTER_IN_SCREEN);
-            } else {
-                showInfo.direction = DIRECTION_BOTTOM;
-            }
         }
     }
 
@@ -378,9 +292,39 @@ public class ZNormalPopup extends ZBasePopup {
     class DecorRootView extends FrameLayout {
         private ShowInfo mShowInfo;
         private View mContentView;
-        private Paint mArrowPaint;
-        private Path mArrowPath;
-        private RectF mArrowSaveRect = new RectF();
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            int action = event.getActionMasked();
+            if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_CANCEL) {
+                if (isTouchInBlack(event)) {
+                    Log.d(TAG, "点击了空白区域，说明这个可以关掉");
+                }
+                dismiss();
+            }
+            return true;
+        }
+
+        private boolean isTouchInBlack(MotionEvent event) {
+            View childView = findChildViewUnder(event.getX(), event.getY());
+            return childView == null;
+        }
+
+        private View findChildViewUnder(float x, float y) {
+            final int count = getChildCount();
+            for (int i = count - 1; i >= 0; i--) {
+                final View child = getChildAt(i);
+                final float translationX = child.getTranslationX();
+                final float translationY = child.getTranslationY();
+                if (x >= child.getLeft() + translationX
+                        && x <= child.getRight() + translationX
+                        && y >= child.getTop() + translationY
+                        && y <= child.getBottom() + translationY) {
+                    return child;
+                }
+            }
+            return null;
+        }
 
         private int mPendingWidth;
         private int mPendingHeight;
@@ -390,7 +334,6 @@ public class ZNormalPopup extends ZBasePopup {
                 mShowInfo.width = mPendingWidth;
                 mShowInfo.height = mPendingHeight;
                 calculateXY(mShowInfo);
-                adjustShowInfo(mShowInfo);
                 mWindow.update(mShowInfo.getWindowX(), mShowInfo.getWindowY(), mShowInfo.windowWidth(), mShowInfo.windowHeight());
             }
         };
@@ -398,11 +341,7 @@ public class ZNormalPopup extends ZBasePopup {
         private DecorRootView(Context context, ShowInfo showInfo) {
             super(context);
             mShowInfo = showInfo;
-            mArrowPaint = new Paint();
-            mArrowPaint.setAntiAlias(true);
-            mArrowPath = new Path();
         }
-
 
         public void setContentView(View contentView) {
             if (mContentView != null) {
@@ -428,20 +367,18 @@ public class ZNormalPopup extends ZBasePopup {
                     post(mUpdateWindowAction);
                 }
             }
-            setMeasuredDimension(mShowInfo.windowWidth(), mShowInfo.windowHeight());
+//            setMeasuredDimension(mShowInfo.windowWidth(), mShowInfo.windowHeight());
+            setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+//            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
 
         @Override
         protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
             if (mContentView != null) {
-                mContentView.layout(mShowInfo.decorationLeft, mShowInfo.decorationTop,
-                        mShowInfo.width + mShowInfo.decorationLeft,
-                        mShowInfo.height + mShowInfo.decorationTop);
-                Log.d(TAG, "zzzzzzzz mShowInfo.decorationTop:" + mShowInfo.decorationTop);
-                Log.d(TAG, "zzzzzzzz mArrowHeight:" + mArrowHeight);
-                Log.d(TAG, "zzzzzzzz mContentView:" + mContentView.getTop());
-
-
+                Log.w(TAG, "位置 1 anchorLocation:" + Arrays.toString(mShowInfo.anchorLocation));
+                Log.w(TAG, "位置 2 anchorRootLocation:" + Arrays.toString(mShowInfo.anchorRootLocation));
+                Log.w(TAG, "位置 3 visibleWindowFrame:" + mShowInfo.visibleWindowFrame.toString());
+                mContentView.layout(mShowInfo.getWindowX(), mShowInfo.getWindowY(), mShowInfo.getWindowX() + mShowInfo.width, mShowInfo.getWindowY() + mShowInfo.height);
             }
         }
 
@@ -454,45 +391,6 @@ public class ZNormalPopup extends ZBasePopup {
         @Override
         protected void dispatchDraw(Canvas canvas) {
             super.dispatchDraw(canvas);
-            if (mShowArrow) {
-                if (mShowInfo.direction == DIRECTION_TOP) {
-                    canvas.save();
-                    mArrowSaveRect.set(0f, 0f, mShowInfo.width, mShowInfo.height);
-                    mArrowPaint.setStyle(Paint.Style.FILL);
-                    mArrowPaint.setColor(mBgUsedColor);
-                    mArrowPaint.setXfermode(null);
-                    int l = mShowInfo.anchorCenter - mShowInfo.x - mArrowWidth / 2;
-                    l = Math.min(Math.max(l, mShowInfo.decorationLeft),
-                            getWidth() - mShowInfo.decorationRight - mArrowWidth);
-                    int t = mShowInfo.decorationTop + mShowInfo.height - mBorderWidth;
-                    canvas.translate(l, t);
-                    mArrowPath.reset();
-                    mArrowPath.setLastPoint(-mArrowWidth / 2f, 0);
-                    mArrowPath.lineTo(mArrowWidth / 2f, mArrowHeight);
-                    mArrowPath.lineTo(mArrowWidth * 3 / 2f, 0);
-                    mArrowPath.close();
-                    canvas.drawPath(mArrowPath, mArrowPaint);
-                    canvas.restore();
-                } else if (mShowInfo.direction == DIRECTION_BOTTOM) {
-                    canvas.save();
-                    mArrowPaint.setStyle(Paint.Style.FILL);
-                    mArrowPaint.setXfermode(null);
-                    mArrowPaint.setColor(mBgUsedColor);
-                    int l = mShowInfo.anchorCenter - mShowInfo.x - mArrowWidth / 2;
-                    l = Math.min(Math.max(l, mShowInfo.decorationLeft),
-                            getWidth() - mShowInfo.decorationRight - mArrowWidth);
-                    int t = mShowInfo.decorationTop + mBorderWidth;
-                    canvas.translate(l, t);
-                    Log.w(TAG, "zzzzzzzz 11:" + mContentView.getTop() + " 22:" + mShowInfo.decorationTop + " 33:" + mArrowHeight);
-                    mArrowPath.reset();
-                    mArrowPath.setLastPoint(-mArrowWidth / 2f, 0);
-                    mArrowPath.lineTo(mArrowWidth / 2f, -mArrowHeight);
-                    mArrowPath.lineTo(mArrowWidth * 3 / 2f, 0);
-                    mArrowPath.close();
-                    canvas.drawPath(mArrowPath, mArrowPaint);
-                    canvas.restore();
-                }
-            }
         }
     }
 

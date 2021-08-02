@@ -1,3 +1,4 @@
 rootProject.name = "AppFrame5"
 include ':app'
 include ':zztpopupwindows'
+include ':samplecanvas'

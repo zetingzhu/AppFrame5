@@ -3,19 +3,11 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        debug {
-            storeFile file('D:\\ZZTAndroid\\Android_Work\\AppFrame5\\dev\\zztappkey.jks')
-            storePassword 'android'
-            keyAlias 'android'
-            keyPassword 'android'
-        }
-    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.zzt.popupwindows"
+        applicationId "com.zzt.samplecanvas"
         minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
