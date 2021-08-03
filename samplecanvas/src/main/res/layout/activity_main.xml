@@ -12,6 +12,12 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
+
+        <com.zzt.samplecanvas.sample.ViewV1
+            android:layout_width="match_parent"
+            android:layout_height="600dp" />
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
