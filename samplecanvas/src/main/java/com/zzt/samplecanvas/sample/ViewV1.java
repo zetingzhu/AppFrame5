@@ -316,7 +316,6 @@ public class ViewV1 extends View {
         labelP.setTextSize(30);
         Paint paint = new Paint();
         paint.setFilterBitmap(false);
-        paint.setXfermode(null);
         canvas.translate(30, 70);
         int x = 0;
         int y = 0;
@@ -326,7 +325,7 @@ public class ViewV1 extends View {
             paint.setColor(Color.parseColor("#BBB4ED9F"));
             canvas.drawRect(x, y, x + W, y + H, paint);
 
-//            int sc = canvas.saveLayer(x, y, x + W, y + H, null);
+            int sc = canvas.saveLayer(x, y, x + W, y + H, null);
 
             canvas.translate(x, y);
             canvas.drawBitmap(mDstB, 0, 0, paint);
@@ -334,7 +333,7 @@ public class ViewV1 extends View {
             paint.setXfermode(sModes[i]);
             canvas.drawBitmap(mSrcB, 0, 0, paint);
             paint.setXfermode(null);
-//            canvas.restoreToCount(sc);
+            canvas.restoreToCount(sc);
 
             canvas.drawText(sLabels[i], x + W / 2, y - labelP.getTextSize() / 2, labelP);
             x += W + 10;
