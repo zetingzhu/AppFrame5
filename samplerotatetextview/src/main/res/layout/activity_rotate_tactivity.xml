@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RotateTActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+
+    <com.zzt.RotateTextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/icon_red_triangle"
+        android:gravity="center"
+        app:slantedLength="@dimen/margin_25dp"
+        app:slantedMode="right"
+        app:slantedText="+33%"
+        app:slantedTextColor="@color/white"
+        app:slantedTextSize="@dimen/text_size_12sp" />
+
+    <com.zzt.RotateTextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        app:slantedBackgroundColor="@color/color_F42855"
+        app:slantedLength="35dp"
+        app:slantedMode="right"
+        app:slantedText="5%OFF"
+        app:slantedTextColor="@color/white"
+        app:slantedTextSize="@dimen/text_size_8sp" />
+
+    <com.zzt.RotateTextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        app:slantedBackgroundColor="@color/color_F42855"
+        app:slantedLength="35dp"
+        app:slantedMode="left_triangle"
+        app:slantedText="5%OFF"
+        app:slantedTextColor="@color/white"
+        app:slantedTextSize="@dimen/text_size_8sp" />
+
+    <com.zzt.RotateTextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        app:slantedBackgroundColor="@color/color_F42855"
+        app:slantedLength="35dp"
+        app:slantedMode="left_bottom"
+        app:slantedText="5%OFF"
+        app:slantedTextColor="@color/white"
+        app:slantedTextSize="@dimen/text_size_8sp" />
+
+    <com.zzt.RotateTextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        app:slantedBackgroundColor="@color/color_F42855"
+        app:slantedLength="35dp"
+        app:slantedMode="left_bottom_triangle"
+        app:slantedText="5%OFF"
+        app:slantedTextColor="@color/white"
+        app:slantedTextSize="@dimen/text_size_8sp" />
+
+    <com.zzt.RotateTextView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        app:slantedBackgroundColor="@color/color_F42855"
+        app:slantedLength="35dp"
+        app:slantedMode="right_bottom_triangle"
+        app:slantedText="5%OFF"
+        app:slantedTextColor="@color/white"
+        app:slantedTextSize="20sp" />
+</LinearLayout>

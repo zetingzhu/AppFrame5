@@ -25,14 +25,12 @@ public class MyTestPopupWindows extends PopupWindow {
     public MyTestPopupWindows(Context context) {
         super(context);
         this.mContext = mContext;
-        //打气筒
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //打气
         mContentView = mInflater.inflate(R.layout.layout_popup_windows, null);
         //设置View
         setContentView(mContentView);
         //设置宽与高
-        setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
         setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         /**
          * 设置背景只有设置了这个才可以点击外边和BACK消失

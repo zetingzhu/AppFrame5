@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.zzt.sampleshedowlayout.weight.ZShadowLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:hl_cornerRadius="10dp"
+        app:hl_shadowColor="#F7FA0000"
+        app:hl_shadowLimit="10dp"
+        app:hl_shadowOffsetY="4dp"
+        app:hl_shadowSymmetry="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.zzt.sampleshedowlayout.weight.TriangleView
+                android:id="@+id/tlv_triangle"
+                android:layout_width="14dp"
+                android:layout_height="8dp"
+                android:layout_alignEnd="@+id/tv_text"
+                android:layout_marginEnd="10dp"
+                app:tlv_color="@color/white"
+                app:tlv_mode="regular" />
+
+            <TextView
+                android:id="@+id/tv_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tlv_triangle"
+                android:background="@color/white"
+                android:padding="30dp"
+                android:text="Hello World!" />
+        </RelativeLayout>
+    </com.zzt.sampleshedowlayout.weight.ZShadowLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

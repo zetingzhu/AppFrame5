@@ -4,19 +4,29 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/FloatingActionButtonLibrary" />
+            <option value="$PROJECT_DIR$/QmuiSkinLib" />
+            <option value="$PROJECT_DIR$/SampleDayNight" />
+            <option value="$PROJECT_DIR$/SampleFloatingActionButton" />
+            <option value="$PROJECT_DIR$/SampleNavigation" />
+            <option value="$PROJECT_DIR$/SampleShedowLayout" />
+            <option value="$PROJECT_DIR$/SampleVectordrawable" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/samplecanvas" />
+            <option value="$PROJECT_DIR$/sampleleakcanary" />
+            <option value="$PROJECT_DIR$/samplerotatetextview" />
             <option value="$PROJECT_DIR$/zztpopupwindows" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
       </GradleProjectSettings>
     </option>
+    <option name="offlineMode" value="true" />
   </component>
 </project>

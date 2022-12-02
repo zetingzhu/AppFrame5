@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_FFFFFF_or_390000"
+    android:orientation="vertical"
+    tools:context=".activity.ActivityTestV2">
+
+
+    <TextView
+        android:id="@+id/tv_content_v2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/text_bg"
+        android:padding="50dp"
+        android:text="这个是第二个页面" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="变亮"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="变暗"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/button_v5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="弹框"
+        tools:ignore="MissingConstraints" />
+</LinearLayout>

@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/QmuiSkinLib/src/main/res/layout/activity_main.xml" value="0.240625" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleDayNight/src/main/res/layout/activity_main.xml" value="0.3400309119010819" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleDayNight/src/main/res/layout/activity_test_v2.xml" value="0.1" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleDayNight/src/main/res/layout/dialog_view_test.xml" value="0.2546875" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleFloatingActionButton/src/main/res/layout/activity_defalut_list.xml" value="0.176" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleFloatingActionButton/src/main/res/layout/activity_floating_action_button.xml" value="0.10031347962382445" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleFloatingActionButton/src/main/res/layout/list_item.xml" value="0.13125" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleNavigation/src/main/res/layout/activity_navigation.xml" value="0.2546875" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleShedowLayout/src/main/res/layout/activity_main.xml" value="0.240625" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/avd.xml" value="0.2388888888888889" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/battery_charging.xml" value="0.2351851851851852" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/ic_baseline_trip_origin_24.xml" value="0.2708333333333333" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/ic_iv_svg_2.xml" value="0.2388888888888889" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/ic_launcher_background.xml" value="0.2708333333333333" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/ic_svg_1.xml" value="0.2388888888888889" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/ic_svg_3.xml" value="0.2388888888888889" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/path_morph.xml" value="0.2388888888888889" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/drawable/rotation.xml" value="0.2388888888888889" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/SampleVectordrawable/src/main/res/layout/activity_main.xml" value="0.2546875" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/samplecanvas/src/main/res/layout/activity_main.xml" value="0.14936519790888722" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/samplerotatetextview/src/main/res/drawable/ic_launcher_background.xml" value="0.2708333333333333" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/samplerotatetextview/src/main/res/layout/activity_rotate_tactivity.xml" value="0.240625" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/zztpopupwindows/src/main/res/drawable/bg_test_v1.xml" value="0.2708333333333333" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/zztpopupwindows/src/main/res/layout/activity_popup_sample.xml" value="0.13451086956521738" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/zztpopupwindows/src/main/res/layout/dialog_view_test.xml" value="0.2546875" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/zztpopupwindows/src/main/res/layout/guide_test_v1.xml" value="0.2513586956521739" />
+        <entry key="..\:/ZZTAndroid/Android_Work/AppFrame5/zztpopupwindows/src/main/res/layout/layout_popup_windows_touch.xml" value="0.2546875" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

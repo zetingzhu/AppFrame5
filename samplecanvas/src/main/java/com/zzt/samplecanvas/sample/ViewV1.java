@@ -91,7 +91,7 @@ public class ViewV1 extends View {
 
     private void initView(Context context) {
         bgPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        bgPaint.setTextSize(1);
+        bgPaint.setTextSize(5);
         bgPaint.setColor(Color.parseColor("#C2000000"));
 
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -126,7 +126,7 @@ public class ViewV1 extends View {
 //        drawSweepGradient(canvas);
 //        drawComposeShader(canvas);
 //        drawShadowLayer(canvas);
-//        drawPorterDuff(canvas);
+        drawPorterDuff(canvas);
 //        drawCanvasLine(canvas);
 //        drawCanvasPoint(canvas);
 //        canvasDrawRect(canvas);
@@ -134,7 +134,7 @@ public class ViewV1 extends View {
 //        canvasDrawOval(canvas);
 //        canvasDrawArc(canvas);
 //        canvasPath(canvas);
-        canvasDrawText(canvas);
+//        canvasDrawText(canvas);
     }
 
     private void canvasDrawText(Canvas canvas) {
@@ -316,6 +316,7 @@ public class ViewV1 extends View {
         labelP.setTextSize(30);
         Paint paint = new Paint();
         paint.setFilterBitmap(false);
+        paint.setXfermode(null);
         canvas.translate(30, 70);
         int x = 0;
         int y = 0;
@@ -325,7 +326,7 @@ public class ViewV1 extends View {
             paint.setColor(Color.parseColor("#BBB4ED9F"));
             canvas.drawRect(x, y, x + W, y + H, paint);
 
-            int sc = canvas.saveLayer(x, y, x + W, y + H, null);
+//            int sc = canvas.saveLayer(x, y, x + W, y + H, null);
 
             canvas.translate(x, y);
             canvas.drawBitmap(mDstB, 0, 0, paint);
@@ -333,7 +334,7 @@ public class ViewV1 extends View {
             paint.setXfermode(sModes[i]);
             canvas.drawBitmap(mSrcB, 0, 0, paint);
             paint.setXfermode(null);
-            canvas.restoreToCount(sc);
+//            canvas.restoreToCount(sc);
 
             canvas.drawText(sLabels[i], x + W / 2, y - labelP.getTextSize() / 2, labelP);
             x += W + 10;
